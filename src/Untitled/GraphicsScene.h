@@ -5,7 +5,9 @@
 #include "AEventReciever.h"
 #include "EventFilterMouse.h"
 
-class GraphicsScene : public QGraphicsScene, public AEventReciever
+#include <QDebug>
+
+class GraphicsScene : public QGraphicsScene , public AEventReciever
 {
 
     public:
@@ -13,6 +15,14 @@ class GraphicsScene : public QGraphicsScene, public AEventReciever
         {
 
             this->filterAdd(new EventFilterMouse());
+
+        }
+
+    protected:
+        virtual void eventPassed(QEvent *event)
+        {
+
+            qDebug() << event->type();
 
         }
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <ui_WindowMain.h>
 #include "GraphicsScene.h"
+#include "GraphicsView.h"
 #include "AMap.h"
 
 #include <QDebug>
@@ -18,14 +19,16 @@ class MainWindow : public QMainWindow
         {
 
             this->ui.setupUi(this);
-            this->ui.graphicsView->setScene(&this->scene);
+
+            this->graphicsView = new GraphicsView();
+            this->graphicsView->setParent(ui.centralWidget);
+            this->graphicsView->setScene(&this->graphicsScene);
+            this->graphicsView->setSceneRect(0,0,640,480);
 
             AMap map;
             map.setFilePath("maps/001.map");
             map.parse();
-            map.show(this->scene);
-
-            QObject::connect(&this->scene,SIGNAL(newEvent(QEvent*)),this,SLOT(newEvent(QEvent*)));
+            map.show(this->graphicsScene);
 
         }
                            ~MainWindow()
@@ -36,7 +39,8 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::WindowMain      ui;
-        GraphicsScene       scene;
+        GraphicsScene       graphicsScene;
+        GraphicsView*       graphicsView;
 
     private slots:
         void                newEvent(QEvent* event)

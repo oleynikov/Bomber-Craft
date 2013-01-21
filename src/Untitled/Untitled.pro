@@ -29,7 +29,8 @@ HEADERS  += \
     AEventFilter.h \
     AEventReciever.h \
     GraphicsScene.h \
-    EventFilterMouse.h
+    EventFilterMouse.h \
+    GraphicsView.h
 
 FORMS    += \
     WindowMain.ui

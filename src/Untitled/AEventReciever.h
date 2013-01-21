@@ -1,12 +1,23 @@
 #ifndef AEVENTRECIEVER_H
 #define AEVENTRECIEVER_H
 
+#include <QObject>
 #include "AEventFilter.h"
 
-class AEventReciever
+#include <QDebug>
+
+class AEventReciever : virtual public QObject
 {
 
+    Q_OBJECT
+
     public:
+                        AEventReciever(void)
+        {
+
+            this->installEventFilter(this);
+
+        }
         void            filterAdd(AEventFilter* filter)
         {
 
@@ -24,6 +35,8 @@ class AEventReciever
             this->filters.removeOne(filter);
 
         }
+
+    protected:
         virtual bool    eventFilter(QObject* watched, QEvent* event)
         {
 
@@ -37,9 +50,10 @@ class AEventReciever
             return false;
 
         }
+        virtual void    eventPassed(QEvent* event)
+        {
 
-    protected:
-        virtual void    eventPassed(QEvent* event) = 0;
+        }
         bool            filterPassed(QEvent* event)
         {
 
