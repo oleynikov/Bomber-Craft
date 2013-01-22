@@ -22,15 +22,15 @@ HEADERS  += \
     MaterialManager.h \
     MaterialFactory.h \
     ConfigurationFactory.h \
-    Brick.h \
     AXmlFileParser.h \
-    AMap.h \
     WindowMain.h \
-    AEventFilter.h \
-    AEventReciever.h \
     GraphicsScene.h \
-    EventFilterMouse.h \
-    GraphicsView.h
+    GraphicsView.h \
+    SpritePlayer.h \
+    SpriteBrick.h \
+    Game.h \
+    SpriteFactory.h \
+    Map.h
 
 FORMS    += \
     WindowMain.ui

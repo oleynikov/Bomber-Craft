@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>resources/textures/brick.jpg</file>
         <file>resources/textures/wood.jpg</file>
+        <file>resources/textures/player.jpg</file>
     </qresource>
 </RCC>

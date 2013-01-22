@@ -1,17 +1,18 @@
-#ifndef MATERIALFACTORY_H
-#define MATERIALFACTORY_H
+#ifndef SPRITEFACTORY_H
+#define SPRITEFACTORY_H
 
 #include "AFactory.h"
 #include "AMaterial.h"
+#include "ASprite.h"
 
-class MaterialFactory : public AFactory<MaterialType,AMaterial*>
+class SpriteFactory : public AFactory<AMaterial*,ASprite*>
 {
 
     public:
-        virtual AMaterial* make(void)
+        virtual ASprite* make(void)
         {
 
-            AMaterial* material;
+            ASprite* sprite;
 
             switch (this->feedstock)
             {
@@ -28,4 +29,4 @@ class MaterialFactory : public AFactory<MaterialType,AMaterial*>
 
 };
 
-#endif // MATERIALFACTORY_H
+#endif // SPRITEFACTORY_H

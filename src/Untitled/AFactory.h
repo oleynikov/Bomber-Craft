@@ -6,16 +6,24 @@ class AFactory
 {
 
     public:
-        void            setup(Feedstock feedstock)
+        void                setup(Feedstock feedstock)
         {
 
             this->feedstock = feedstock;
 
         }
-        virtual Product make(void) = 0;
+        virtual Product     make(Feedstock feedstock)
+        {
+
+            this->setup(feedstock);
+
+            return this->make();
+
+        }
+        virtual Product     make(void) = 0;
 
     protected:
-        Feedstock       feedstock;
+        Feedstock           feedstock;
 
 };
 

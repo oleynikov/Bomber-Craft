@@ -1,47 +1,47 @@
 #ifndef CONFIGURATIONFATORY_H
 #define CONFIGURATIONFATORY_H
 
-#include <QFile>
-#include <QXmlStreamReader>
-#include "AConfiguration.h"
-#include "AConfigurable.h"
-#include "AXmlFileParser.h"
 #include "AFactory.h"
+#include "AXmlFileParser.h"
+#include "AConfiguration.h"
 
-class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public AXmlFileParser, public AConfigurable
+class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public AXmlFileParser
 {
 
     public:
-        virtual AConfiguration* make(void)
+        virtual AConfiguration*     make(void)
         {
 
-            this->parse();
-
-            return this->configuration;
+            //  Trying to parse configuration file
+            //  Returning new configuration on success, NULL - otherwise
+            return this->parse() ? this->configuration : NULL;
 
         }
 
     protected:
-        virtual bool            configure(void)
+        virtual bool                configure(void)
         {
 
             this->configuration = new AConfiguration();
+
             this->setFilePath(this->feedstock);
             this->setNodeName("parameter");
 
             return true;
 
         }
-        virtual void            parseNode(QXmlStreamReader& xmlReader)
+        virtual void                parseNode(QXmlStreamReader& xmlReader)
         {
 
             QString parameterName = xmlReader.attributes().value("name").toString();
             QString parameterValue = xmlReader.attributes().value("value").toString();
 
-            configuration->setParameter(parameterName,parameterValue);
+            this->configuration->setParameter(parameterName,parameterValue);
 
         }
 
+    private:
+        AConfiguration*             configuration;
 };
 
 #endif // CONFIGURATIONFATORY_H

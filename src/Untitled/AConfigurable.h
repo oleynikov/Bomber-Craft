@@ -2,18 +2,58 @@
 #define ACONFIGURABLE_H
 
 #include "AConfiguration.h"
+#include "ConfigurationFactory.h"
 
 class AConfigurable
 {
 
     public:
-        void            setConfiguration(AConfiguration* configuration)
+                                AConfigurable(QString configurationFile = "")
+        {
+
+            if (configurationFile != "")
+            {
+
+                this->loadConfiguration(configurationFile);
+
+            }
+
+        }
+                                ~AConfigurable(void)
+        {
+
+            if(this->configuration)
+            {
+
+                delete this->configuration;
+
+            }
+
+        }
+        void                    loadConfiguration(QString configurationFile)
+        {
+
+            //  Creating and configuring conf. factory
+            ConfigurationFactory configurationFactory;
+            configurationFactory.setup(configurationFile);
+
+            //  Saving new configuration
+            this->setConfiguration(configurationFactory.make());
+
+        }
+        void                    setConfiguration(AConfiguration* configuration)
         {
 
             this->configuration = configuration;
 
         }
-        QVariant        getParameter(QString parameterId)
+        AConfiguration*         getConfiguration(void) const
+        {
+
+            return this->configuration;
+
+        }
+        QVariant                getParameter(QString parameterId)
         {
 
             return this->configuration->getParameter(parameterId);
@@ -21,7 +61,7 @@ class AConfigurable
         }
 
     protected:
-        AConfiguration* configuration;
+        mutable AConfiguration* configuration;
 
 };
 

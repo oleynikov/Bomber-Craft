@@ -7,7 +7,8 @@ enum MaterialType
 {
 
     MATERIAL_STONE,
-    MATERIAL_WOOD
+    MATERIAL_WOOD,
+    MATERIAL_PLAYER
 
 };
 

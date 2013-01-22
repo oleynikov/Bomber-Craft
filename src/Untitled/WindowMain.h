@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include <ui_WindowMain.h>
-#include "GraphicsScene.h"
 #include "GraphicsView.h"
-#include "AMap.h"
+#include "Game.h"
 
 #include <QDebug>
+#include <SpritePlayer.h>
 
 class MainWindow : public QMainWindow
 {
@@ -18,18 +18,29 @@ class MainWindow : public QMainWindow
         explicit            MainWindow(QWidget *parent = 0) : QMainWindow(parent)
         {
 
+            // Sutting GUI up
             this->ui.setupUi(this);
 
-            this->graphicsView = new GraphicsView();
-            this->graphicsView->setParent(ui.centralWidget);
-            this->graphicsView->setScene(&this->graphicsScene);
-            this->graphicsView->setSceneRect(0,0,640,480);
+            //  Configuring graphics view
+            this->display.setParent(ui.centralWidget);
+            this->display.setScene(&this->game.getScene());
+            this->display.setSceneRect(0,0,640,480);
+            QObject::connect(&this->display,SIGNAL(keyPress(int)),&this->game,SLOT(keyPress(int)));
 
-            AMap map;
-            map.setFilePath("maps/001.map");
-            map.parse();
-            map.show(this->graphicsScene);
+            //  Starting the game
+            this->game.mapLoad("001");
 
+        /*
+            ConfigurationFactory configurationFactory;
+            configurationFactory.setup("configuration/game.config");
+
+            MaterialFactory materialFactory;
+            materialFactory.setup(MATERIAL_PLAYER);
+            AMaterial* material = materialFactory.make();
+            SpritePlayer* player = new SpritePlayer(material,configurationFactory.make());
+
+            this->graphicsScene.addItem(player);
+*/
         }
                            ~MainWindow()
         {
@@ -39,8 +50,8 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::WindowMain      ui;
-        GraphicsScene       graphicsScene;
-        GraphicsView*       graphicsView;
+        Game                game;
+        GraphicsView        display;
 
     private slots:
         void                newEvent(QEvent* event)

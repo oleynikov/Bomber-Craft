@@ -10,11 +10,13 @@ class ASprite : public QGraphicsItem
 {
 
     public:
-                        ASprite()
+                        ASprite() : passable(false)
         {
 
+
+
         }
-                        ASprite(QPainterPath shape,AMaterial* material)
+                        ASprite(QPainterPath shape,AMaterial* material) : passable(false)
         {
 
             this->setShape(shape);
@@ -75,10 +77,17 @@ class ASprite : public QGraphicsItem
             return this->material;
 
         }
+        bool            getPassable(void) const
+        {
+
+            return this->passable;
+
+        }
 
     private:
         QPainterPath    shape;
         AMaterial*      material;
+        bool            passable;
 
 };
 

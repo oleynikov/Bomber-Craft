@@ -44,10 +44,9 @@ class AXmlFileParser
         {
 
 
-            if (this->configure())
+            if (this->configure() && this->parseDocument())
             {
 
-                this->parseDocument();
                 return true;
 
             }
@@ -66,7 +65,7 @@ class AXmlFileParser
         virtual void    parseNode(QXmlStreamReader& xmlReader) = 0;
 
     private:
-        void            parseDocument(void)
+        bool            parseDocument(void)
         {
 
             QFile xmlFile(this->xmlFilePath);
@@ -91,7 +90,11 @@ class AXmlFileParser
                 xmlFile.close();
                 xmlReader.clear();
 
+                return true;
+
             }
+
+            return false;
 
         }
         QString         xmlFilePath;
