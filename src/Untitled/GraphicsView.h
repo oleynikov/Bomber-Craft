@@ -11,13 +11,6 @@ class GraphicsView : public QGraphicsView
 
     Q_OBJECT
 
-    public:
-        GraphicsView()
-        {
-
-
-        }
-
     protected:
         virtual void keyPressEvent(QKeyEvent* event)
         {
