@@ -7,7 +7,6 @@
 #include "Game.h"
 
 #include <QDebug>
-#include <SpritePlayer.h>
 
 class MainWindow : public QMainWindow
 {
@@ -30,19 +29,8 @@ class MainWindow : public QMainWindow
             //  Starting the game
             this->game.mapLoad("001");
 
-        /*
-            ConfigurationFactory configurationFactory;
-            configurationFactory.setup("configuration/game.config");
-
-            MaterialFactory materialFactory;
-            materialFactory.setup(MATERIAL_PLAYER);
-            AMaterial* material = materialFactory.make();
-            SpritePlayer* player = new SpritePlayer(material,configurationFactory.make());
-
-            this->graphicsScene.addItem(player);
-*/
         }
-                           ~MainWindow()
+                            ~MainWindow(void)
         {
 
 
@@ -50,16 +38,8 @@ class MainWindow : public QMainWindow
 
     private:
         Ui::WindowMain      ui;
-        Game                game;
         GraphicsView        display;
-
-    private slots:
-        void                newEvent(QEvent* event)
-        {
-
-            qDebug() << event->type();
-
-        }
+        Game                game;
 
 };
 

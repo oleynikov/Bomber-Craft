@@ -6,24 +6,29 @@ class AFactory
 {
 
     public:
+                            AFactory(void)
+        {
+
+            this->product = NULL;
+
+        }
         void                setup(Feedstock feedstock)
         {
 
             this->feedstock = feedstock;
 
         }
-        virtual Product     make(Feedstock feedstock)
+        virtual bool        make(void) = 0;
+        Product*            getProduct(void) const
         {
 
-            this->setup(feedstock);
-
-            return this->make();
+            return this->product;
 
         }
-        virtual Product     make(void) = 0;
 
     protected:
         Feedstock           feedstock;
+        Product*            product;
 
 };
 

@@ -8,10 +8,10 @@ class MaterialFactory : public AFactory<MaterialType,AMaterial*>
 {
 
     public:
-        virtual AMaterial* make(void)
+        virtual bool make(void)
         {
 
-            AMaterial* material;
+            AMaterial* material = NULL;
 
             switch (this->feedstock)
             {
@@ -21,6 +21,8 @@ class MaterialFactory : public AFactory<MaterialType,AMaterial*>
                 case MATERIAL_PLAYER: material = new AMaterial("player.jpg",50); break;
 
             }
+
+            this->product = &material;
 
             return material;
 

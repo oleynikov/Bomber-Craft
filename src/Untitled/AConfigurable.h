@@ -25,20 +25,27 @@ class AConfigurable
             if(this->configuration)
             {
 
-                delete this->configuration;
+                //delete this->configuration;
 
             }
 
         }
-        void                    loadConfiguration(QString configurationFile)
+        bool                    loadConfiguration(QString configurationFile)
         {
 
             //  Creating and configuring conf. factory
             ConfigurationFactory configurationFactory;
             configurationFactory.setup(configurationFile);
 
-            //  Saving new configuration
-            this->setConfiguration(configurationFactory.make());
+            if(configurationFactory.make())
+            {
+
+                this->setConfiguration(*(configurationFactory.getProduct()));
+                return true;
+
+            }
+
+            return false;
 
         }
         void                    setConfiguration(AConfiguration* configuration)

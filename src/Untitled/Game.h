@@ -16,11 +16,18 @@ class Game : public QObject , public AConfigurable
 
     public:
                                 Game(void)
-                                    :   AConfigurable("configuration/game.config")
         {
 
-            this->player = this->playerCreate();
-            this->graphicsScene.addItem(this->player);
+            //  Configuration loaded successfully
+                                    this->loadConfiguration("qwe");
+
+                                    /*if (this->loadConfiguration("configuration/game.config"))
+            {
+
+                this->player = this->playerCreate();
+                this->graphicsScene.addItem(this->player);
+
+            }*/
 
         }
         void                    mapLoad(const QString mapId)
@@ -59,22 +66,28 @@ class Game : public QObject , public AConfigurable
         SpritePlayer*           playerCreate(void)
         {
 
+            SpritePlayer* player = NULL;
+
             this->materialFactory.setup(MATERIAL_PLAYER);
-            AMaterial* material = materialFactory.make();
 
+            if(materialFactory.make())
+            {
 
-           SpritePlayer* player = new SpritePlayer(material,this->configuration);
+                AMaterial* material = *materialFactory.getProduct();
+                player = new SpritePlayer(material,this->configuration);
 
-           return player;
+            }
+
+            return player;
 
         }
         bool                    playerMove(QPoint delta)
         {
 
-            int tileSize = this->configuration->getParameter("GRID_SIZE").toInt();
+            int tileSize = this->configuration->getParameter("MAP_TILE_SIZE").toInt();
             QPointF positionNew = this->player->pos() + delta * tileSize;
 
-            if(this->graphicsScene.tilePassable(positionNew))
+            if(this->map.pointIsPassable(positionNew))
             {
 
                 this->player->moveBy(tileSize*delta.x(),tileSize*delta.y());

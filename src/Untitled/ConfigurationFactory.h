@@ -9,17 +9,18 @@ class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public A
 {
 
     public:
-        virtual AConfiguration*     make(void)
+        virtual bool        make(void)
         {
 
-            //  Trying to parse configuration file
-            //  Returning new configuration on success, NULL - otherwise
-            return this->parse() ? this->configuration : NULL;
+            bool success = this->parse();
+            this->product = &this->configuration;
+
+            return success;
 
         }
 
     protected:
-        virtual bool                configure(void)
+        virtual bool        configure(void)
         {
 
             this->configuration = new AConfiguration();
@@ -30,7 +31,7 @@ class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public A
             return true;
 
         }
-        virtual void                parseNode(QXmlStreamReader& xmlReader)
+        virtual void        parseNode(QXmlStreamReader& xmlReader)
         {
 
             QString parameterName = xmlReader.attributes().value("name").toString();
@@ -41,7 +42,7 @@ class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public A
         }
 
     private:
-        AConfiguration*             configuration;
+        AConfiguration*     configuration;
 };
 
 #endif // CONFIGURATIONFATORY_H
