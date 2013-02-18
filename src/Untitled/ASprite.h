@@ -46,7 +46,9 @@ class ASprite : public QGraphicsItem
 
             }
 
-            painterBrush.setTexture(pixmap);
+            //painterBrush.setTexture(pixmap);
+            painterBrush.setColor(Qt::green);
+            painter->drawEllipse(0,0,100,100);
 
             painter->setBrush(painterBrush);
             painter->setPen(painterPen);
