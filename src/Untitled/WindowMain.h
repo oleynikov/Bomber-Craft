@@ -29,6 +29,7 @@ class MainWindow : public QMainWindow
             //  Starting the game
             this->game.mapLoad("001");
 
+            this->game.getScene().addEllipse(0,0,100,100);
         }
                             ~MainWindow(void)
         {

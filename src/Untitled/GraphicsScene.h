@@ -16,35 +16,29 @@ class GraphicsScene : public QGraphicsScene
 
 
         }
-        bool tilePassable(QPointF point)
+        bool tileIsInside(QPointF point)
         {
 
-            /*
-
-                Checking map bounds
-
-            */
-            if (point.x() < 0 || point.y() < 0)
+            if ( point.x() < 0 || point.y() < 0 )
             {
 
                 return false;
 
             }
 
+            return true;
 
+        }
 
+        bool tileIsEmpty(QPointF point)
+        {
 
+            QTransform transform;
 
-            /*
-
-                Checking tile passability
-
-            */
-
-            QGraphicsItem* item = this->itemAt(point);
+            QGraphicsItem* item = this->itemAt(point.x(),point.y(),transform);
 
             //  Empty tile = passable tile
-            if(!item)
+            if ( !item )
             {
 
                 return true;
@@ -53,7 +47,22 @@ class GraphicsScene : public QGraphicsScene
 
             //  Passable tile
             ASprite* sprite = static_cast<ASprite*>(item);
+
             if(sprite->getPassable())
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        bool tilePassable(QPointF point)
+        {
+
+            if ( this->tileIsInside(point) && this->tileIsEmpty(point) )
             {
 
                 return true;

@@ -36,6 +36,8 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
             for (spriteItr ; spriteItr != this->end() ; spriteItr++)
             {
 
+                qDebug() << (*spriteItr)->x()  << " " << (*spriteItr)->y();
+
                 scene.addItem(*spriteItr);
 
             }

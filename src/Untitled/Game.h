@@ -19,15 +19,17 @@ class Game : public QObject , public AConfigurable
         {
 
             //  Configuration loaded successfully
-                                    this->loadConfiguration("qwe");
+                                    //this->loadConfiguration("qwe");
 
-                                    /*if (this->loadConfiguration("configuration/game.config"))
+            if (this->loadConfiguration("configuration/game.config"))
             {
 
+                qDebug() << "!";
+/*
                 this->player = this->playerCreate();
                 this->graphicsScene.addItem(this->player);
-
-            }*/
+*/
+            }
 
         }
         void                    mapLoad(const QString mapId)
