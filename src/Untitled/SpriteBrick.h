@@ -4,6 +4,8 @@
 #include "ASprite.h"
 #include "AConfigurable.h"
 
+#include <QDebug>
+
 class SpriteBrick : public ASprite , public AConfigurable
 {
 
@@ -16,7 +18,7 @@ class SpriteBrick : public ASprite , public AConfigurable
         {
 
             this->configuration = configuration;
-            int gridSize = this->configuration->getParameter("MAP_TILE_SIZE").toInt();
+            int gridSize = this->configuration->getParameter("GRID_SIZE").toInt();
 
             QPainterPath shape;
             shape.addRect(0,0,gridSize,gridSize);

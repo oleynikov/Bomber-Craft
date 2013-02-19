@@ -16,7 +16,7 @@ class SpritePlayer : public ASprite , public AConfigurable
         {
 
             this->configuration = configuration;
-            int gridSize = this->configuration->getParameter("MAP_TILE_SIZE").toInt();
+            int gridSize = this->configuration->getParameter("GRID_SIZE").toInt();
 
             QPainterPath shape;
             shape.addRect(0,0,gridSize,gridSize);

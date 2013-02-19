@@ -24,11 +24,9 @@ class Game : public QObject , public AConfigurable
             if (this->loadConfiguration("configuration/game.config"))
             {
 
-                qDebug() << "!";
-/*
                 this->player = this->playerCreate();
                 this->graphicsScene.addItem(this->player);
-*/
+
             }
 
         }
@@ -86,7 +84,7 @@ class Game : public QObject , public AConfigurable
         bool                    playerMove(QPoint delta)
         {
 
-            int tileSize = this->configuration->getParameter("MAP_TILE_SIZE").toInt();
+            int tileSize = this->configuration->getParameter("GRID_SIZE").toInt();
             QPointF positionNew = this->player->pos() + delta * tileSize;
 
             if(this->map.pointIsPassable(positionNew))
