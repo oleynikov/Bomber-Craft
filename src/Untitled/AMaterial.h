@@ -16,22 +16,44 @@ class AMaterial
 {
 
     public:
-                    AMaterial(QString textureFile = "" , int hp = 0)
+                    AMaterial
+                    (
+                        QString textureFile = "",
+                        int hp = 0
+                    )
+                    :   texture(NULL),
+                        hp(hp)
         {
 
-            QPixmap* pixmap = new QPixmap(":/resources/textures/" + textureFile);
-            ATexture* texture = new ATexture(pixmap);
+            QPixmap* pixmap = new QPixmap();
 
-            this->texture = texture;
-            this->hp = hp;
+            //  Handling pixmap load failure
+            if ( ! pixmap->load(":/resources/textures/" + textureFile) )
+                throw "MateriaCreationFailure";
+
+            this->texture = new ATexture(pixmap);
 
         }
+
+                    ~AMaterial()
+        {
+
+            if (this->texture)
+            {
+
+                delete this->texture;
+
+            }
+
+        }
+
         int         getHp(void) const
         {
 
             return this->hp;
 
         }
+
         ATexture*   getTexture(void) const
         {
 

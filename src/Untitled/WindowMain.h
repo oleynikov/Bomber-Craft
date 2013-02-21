@@ -7,6 +7,7 @@
 #include "Game.h"
 
 #include <QDebug>
+#include <iostream>
 
 class MainWindow : public QMainWindow
 {
@@ -30,9 +31,10 @@ class MainWindow : public QMainWindow
             this->game.mapLoad("001");
 
         }
-                            ~MainWindow(void)
+                           ~MainWindow()
         {
 
+            std::cout << "qwe";
 
         }
 

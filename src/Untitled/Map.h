@@ -33,7 +33,7 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
 
             SpriteListItr spriteItr = this->begin();
 
-            for (spriteItr ; spriteItr != this->end() ; spriteItr++)
+            for ( ; spriteItr != this->end() ; spriteItr++)
             {
 
                 scene.addItem(*spriteItr);
@@ -93,7 +93,7 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
 
             SpriteListItr spriteItr = this->begin();
 
-            for (spriteItr ; spriteItr != this->end() ; spriteItr++)
+            for ( ; spriteItr != this->end() ; spriteItr++)
             {
 
                 ASprite* sprite = *spriteItr;

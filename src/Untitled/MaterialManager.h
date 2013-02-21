@@ -5,6 +5,9 @@
 #include "AMaterial.h"
 #include "MaterialFactory.h"
 
+#include <QDebug>
+#include <iostream>
+
 typedef QMap<MaterialType,AMaterial*>   Materials;
 typedef Materials::Iterator             MaterialItr;
 
@@ -12,6 +15,22 @@ class MaterialManager
 {
 
     public:
+                        ~MaterialManager()
+        {
+
+            MaterialItr materialItr = this->materials.begin();
+
+            std::cout << "qwe";
+
+            for ( ; materialItr!=this->materials.end() ; materialItr++)
+            {
+
+                //delete (*materialItr)->value;
+                std::cout << materialItr.key();
+
+            }
+
+        }
         AMaterial*      getMaterial(MaterialType materialType)
         {
 
@@ -20,7 +39,8 @@ class MaterialManager
             {
 
                 factory.setup(materialType);
-                AMaterial* material = factory.make();
+                factory.make();
+                AMaterial* material = *factory.getProduct();
                 this->materials.insert(materialType,material);
                 return material;
 
@@ -31,8 +51,8 @@ class MaterialManager
         }
 
     private:
-        Materials       materials;
-        MaterialFactory factory;
+        Materials           materials;
+        MaterialFactory     factory;
 
 };
 

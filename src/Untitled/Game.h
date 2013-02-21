@@ -6,6 +6,7 @@
 #include "GraphicsScene.h"
 #include "Map.h"
 #include "SpritePlayer.h"
+#include "MaterialManager.h"
 
 #include <QDebug>
 
@@ -66,19 +67,8 @@ class Game : public QObject , public AConfigurable
         SpritePlayer*           playerCreate(void)
         {
 
-            SpritePlayer* player = NULL;
-
-            this->materialFactory.setup(MATERIAL_PLAYER);
-
-            if(materialFactory.make())
-            {
-
-                AMaterial* material = *materialFactory.getProduct();
-                player = new SpritePlayer(material,this->configuration);
-
-            }
-
-            return player;
+            AMaterial* material = this->materialManager.getMaterial(MATERIAL_PLAYER);
+            return new SpritePlayer(material,this->configuration);
 
         }
         bool                    playerMove(QPoint delta)
@@ -99,7 +89,7 @@ class Game : public QObject , public AConfigurable
 
         }
         mutable GraphicsScene   graphicsScene;
-        MaterialFactory         materialFactory;
+        MaterialManager         materialManager;
         SpritePlayer*           player;
         Map                     map;
 

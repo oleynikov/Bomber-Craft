@@ -16,7 +16,11 @@ class ATexture
 {
 
     public:
-                        ATexture(QPixmap* pixmap,ATextureType type = A_TEXTURE_TYPE_STRETCH)
+                        ATexture
+                        (
+                            QPixmap* pixmap,
+                            ATextureType type = A_TEXTURE_TYPE_STRETCH
+                        )
         {
 
             this->pixmap = pixmap;
