@@ -17,18 +17,8 @@ class Game : public QObject , public AConfigurable
 
     public:
                                 Game(void)
+                                    :   AConfigurable("configuration/game.config")
         {
-
-            //  Configuration loaded successfully
-                                    //this->loadConfiguration("qwe");
-
-            if (this->loadConfiguration("configuration/game.config"))
-            {
-
-                this->player = this->playerCreate();
-                this->graphicsScene.addItem(this->player);
-
-            }
 
         }
         void                    mapLoad(const QString mapId)
@@ -73,7 +63,7 @@ class Game : public QObject , public AConfigurable
         }
         bool                    playerMove(QPoint delta)
         {
-
+/*
             int tileSize = this->configuration->getParameter("GRID_SIZE").toInt();
             QPointF positionNew = this->player->pos() + delta * tileSize;
 
@@ -84,13 +74,12 @@ class Game : public QObject , public AConfigurable
                 return true;
 
             }
-
+*/
             return false;
 
         }
         mutable GraphicsScene   graphicsScene;
         MaterialManager         materialManager;
-        SpritePlayer*           player;
         Map                     map;
 
 };

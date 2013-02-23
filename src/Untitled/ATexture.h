@@ -27,12 +27,14 @@ class ATexture
             this->type = type;
 
         }
+
         QPixmap*        getPixmap(void) const
         {
 
             return this->pixmap;
 
         }
+
         ATextureType    getType(void) const
         {
 

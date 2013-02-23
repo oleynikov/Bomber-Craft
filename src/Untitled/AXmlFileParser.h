@@ -54,6 +54,7 @@ class AXmlFileParser
             return false;
 
         }
+        class           XmlFileOpenFailure { };
 
     protected:
         virtual bool    configure(void)
@@ -70,7 +71,7 @@ class AXmlFileParser
 
             QFile xmlFile(this->xmlFilePath);
 
-            if (xmlFile.open(QIODevice::ReadOnly|QIODevice::Text))
+            if ( xmlFile.open(QIODevice::ReadOnly|QIODevice::Text) )
             {
 
                 QXmlStreamReader xmlReader(&xmlFile);
@@ -93,6 +94,9 @@ class AXmlFileParser
                 return true;
 
             }
+
+            else
+                throw XmlFileOpenFailure();
 
             return false;
 

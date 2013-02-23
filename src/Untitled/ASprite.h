@@ -10,25 +10,37 @@ class ASprite : public QGraphicsItem
 {
 
     public:
-                        ASprite() : passable(false)
+                        ASprite
+                            (
+
+                            )
+                            : passable(false)
         {
 
 
 
         }
-                        ASprite(QPainterPath shape,AMaterial* material) : passable(false)
+
+                        ASprite
+                            (
+                                QPainterPath shape,
+                                AMaterial* material
+                            )
+                            : passable(false)
         {
 
             this->setShape(shape);
             this->setMaterial(material);
 
         }
+
         virtual QRectF  boundingRect() const
         {
 
             return this->getShape().boundingRect();
 
         }
+
         virtual void    paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
         {
 
@@ -54,30 +66,35 @@ class ASprite : public QGraphicsItem
             painter->drawPath(this->getShape());
 
         }
+
         void            setShape(QPainterPath shape)
         {
 
             this->shape = shape;
 
         }
+
         void            setMaterial(AMaterial* material)
         {
 
             this->material = material;
 
         }
+
         QPainterPath    getShape(void) const
         {
 
             return this->shape;
 
         }
+
         AMaterial*      getMaterial(void) const
         {
 
             return this->material;
 
         }
+
         bool            getPassable(void) const
         {
 

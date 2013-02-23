@@ -20,13 +20,10 @@ class MaterialManager
 
             MaterialItr materialItr = this->materials.begin();
 
-            std::cout << "qwe";
-
             for ( ; materialItr!=this->materials.end() ; materialItr++)
             {
 
-                //delete (*materialItr)->value;
-                std::cout << materialItr.key();
+                delete *materialItr;
 
             }
 
@@ -35,13 +32,17 @@ class MaterialManager
         {
 
             // Checking if the material is already created
-            if (!this->materials.contains(materialType))
+            if ( ! this->materials.contains(materialType) )
             {
 
+                //  Configuring the factory and making a material
                 factory.setup(materialType);
                 factory.make();
                 AMaterial* material = *factory.getProduct();
+
+                //  Saving created material;
                 this->materials.insert(materialType,material);
+
                 return material;
 
             }

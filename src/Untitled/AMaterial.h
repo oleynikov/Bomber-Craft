@@ -29,7 +29,7 @@ class AMaterial
 
             //  Handling pixmap load failure
             if ( ! pixmap->load(":/resources/textures/" + textureFile) )
-                throw "MateriaCreationFailure";
+                throw MaterialCreationFailure();
 
             this->texture = new ATexture(pixmap);
 
@@ -60,6 +60,8 @@ class AMaterial
             return this->texture;
 
         }
+
+        class       MaterialCreationFailure { };
 
     private:
         ATexture*   texture;

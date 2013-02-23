@@ -32,10 +32,12 @@ HEADERS  += \
     SpriteBrick.h \
     Game.h \
     SpriteFactory.h \
-    Map.h
+    Map.h \
+    WindowError.h
 
 FORMS    += \
-    WindowMain.ui
+    WindowMain.ui \
+    WindowError.ui
 
 RESOURCES += \
     textures.qrc
