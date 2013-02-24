@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map>
+<map width="640" height="480">
 	<brick x="1" y="1" material="1" />
 	<brick x="2" y="2" material="0" />
 	<brick x="0" y="3" material="1" />

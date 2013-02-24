@@ -16,28 +16,16 @@ class AXmlFileParser
             this->setFilePath(filePath);
 
         }
-        void            setFilePath(QString filePath)
-        {
-
-            this->xmlFilePath = filePath;
-
-        }
         QString         getFilePath(void) const
         {
 
             return this->xmlFilePath;
 
         }
-        void            setNodeName(QString nodeName)
+        void            setFilePath(QString filePath)
         {
 
-            this->nodeName = nodeName;
-
-        }
-        QString         getNodeName(void) const
-        {
-
-            return this->nodeName;
+            this->xmlFilePath = filePath;
 
         }
         bool            parse(void)
@@ -54,7 +42,19 @@ class AXmlFileParser
             return false;
 
         }
-        class           XmlFileOpenFailure { };
+        class           XmlFileOpenFailure
+        {
+
+            public:
+                XmlFileOpenFailure(QString fileName)
+                    :   fileName(fileName)
+                {
+
+                }
+
+                QString fileName;
+
+        };
 
     protected:
         virtual bool    configure(void)
@@ -79,7 +79,7 @@ class AXmlFileParser
                 while(!xmlReader.atEnd() && !xmlReader.hasError())
                 {
 
-                    if (xmlReader.readNext() == QXmlStreamReader::StartElement && this->nodeName == xmlReader.name())
+                    if (xmlReader.readNext() == QXmlStreamReader::StartElement)
                     {
 
                         this->parseNode(xmlReader);
@@ -96,13 +96,12 @@ class AXmlFileParser
             }
 
             else
-                throw XmlFileOpenFailure();
+                throw XmlFileOpenFailure(this->xmlFilePath);
 
             return false;
 
         }
         QString         xmlFilePath;
-        QString         nodeName;
 
 };
 

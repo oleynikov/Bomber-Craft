@@ -20,13 +20,23 @@ class Game : public QObject , public AConfigurable
                                     :   AConfigurable("configuration/game.config")
         {
 
+            this->materialManager = new MaterialManager();
+
+            this->map = new Map();
+
         }
         void                    mapLoad(const QString mapId)
         {
 
-            this->map.setFilePath("maps/" + mapId + ".map");
-            this->map.parse();
-            this->map.show(this->graphicsScene);
+            this->map->setFilePath("maps/" + mapId + ".map");
+            this->map->setMaterialManager(this->materialManager);
+            this->map->parse();
+            this->map->show(this->graphicsScene);
+
+            qreal mapWidth = this->map->getParameter("width").toInt();
+            qreal mapHeight = this->map->getParameter("height").toInt();
+
+            this->graphicsScene.setSceneRect(0,0,mapWidth,mapHeight);
 
         }
         GraphicsScene&          getScene(void)const
@@ -42,45 +52,21 @@ class Game : public QObject , public AConfigurable
 
             switch (keyCode)
             {
-
+/*
                 case Qt::Key_Up:    this->playerMove(QPoint(0,-1)); break;
                 case Qt::Key_Right: this->playerMove(QPoint(1,0)); break;
                 case Qt::Key_Down:  this->playerMove(QPoint(0,1)); break;
                 case Qt::Key_Left:  this->playerMove(QPoint(-1,0)); break;
                 default:            break;
-
+*/
             }
 
         }
 
     private:
-        SpritePlayer*           playerCreate(void)
-        {
-
-            AMaterial* material = this->materialManager.getMaterial(MATERIAL_PLAYER);
-            return new SpritePlayer(material,this->configuration);
-
-        }
-        bool                    playerMove(QPoint delta)
-        {
-/*
-            int tileSize = this->configuration->getParameter("GRID_SIZE").toInt();
-            QPointF positionNew = this->player->pos() + delta * tileSize;
-
-            if(this->map.pointIsPassable(positionNew))
-            {
-
-                this->player->moveBy(tileSize*delta.x(),tileSize*delta.y());
-                return true;
-
-            }
-*/
-            return false;
-
-        }
+        MaterialManager*        materialManager;
+        Map*                    map;
         mutable GraphicsScene   graphicsScene;
-        MaterialManager         materialManager;
-        Map                     map;
 
 };
 

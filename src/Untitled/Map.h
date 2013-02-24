@@ -8,8 +8,8 @@
 #include <QDebug>
 
 #include "AXmlFileParser.h"
-#include "MaterialFactory.h"
 #include "ConfigurationFactory.h"
+#include "MaterialManager.h"
 #include "SpriteBrick.h"
 
 #include <QDebug>
@@ -22,10 +22,8 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
 {
 
     public:
-                            Map(QString filePath = "")
+                            Map() : AConfigurable("configuration/map.config")
         {
-
-            this->setFilePath(filePath);
 
         }
         void                show(QGraphicsScene& scene)
@@ -110,6 +108,12 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
             return true;
 
         }
+        void                setMaterialManager(MaterialManager* materialManager)
+        {
+
+            this->materialManager = materialManager;
+
+        }
 
     protected:
         virtual bool        configure(void)
@@ -122,7 +126,6 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
             {
 
                 this->configuration = *configurationFactory.getProduct();
-                this->setNodeName("brick");
                 return true;
 
             }
@@ -133,17 +136,17 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
         virtual void        parseNode(QXmlStreamReader& xmlReader)
         {
 
-            int brickX = xmlReader.attributes().value("x").toString().toInt();
-            int brickY = xmlReader.attributes().value("y").toString().toInt();
-            int brickMaterial = xmlReader.attributes().value("material").toString().toInt();
+            QString nodeName = xmlReader.name().toString();
 
-            MaterialFactory materialFactory;
-            materialFactory.setup((MaterialType)brickMaterial);
-
-            if(materialFactory.make())
+            if ( nodeName == "brick" )
             {
 
-                AMaterial* material = *(materialFactory.getProduct());
+                int brickX = xmlReader.attributes().value("x").toString().toInt();
+                int brickY = xmlReader.attributes().value("y").toString().toInt();
+                int brickMaterial = xmlReader.attributes().value("material").toString().toInt();
+
+                MaterialType materialType = (MaterialType)brickMaterial;
+                AMaterial* material = this->materialManager->getMaterial(materialType);
                 SpriteBrick* brick = new SpriteBrick(material,this->configuration);
 
                 int gridSize = this->configuration->getParameter("GRID_SIZE").toInt();
@@ -153,9 +156,25 @@ class Map : public SpriteList , public AXmlFileParser , public AConfigurable
 
             }
 
+            else if ( nodeName == "map" )
+            {
+
+                foreach ( QXmlStreamAttribute attribute , xmlReader.attributes() )
+                {
+
+                    QString attributeName = attribute.name().toString();
+                    QString attributeValue = attribute.value().toString();
+
+                    this->configuration->setParameter(attributeName,attributeValue);
+
+                }
+
+            }
+
         }
 
     private:
+        MaterialManager*    materialManager;
         QString             mapFilePath;
 
 };

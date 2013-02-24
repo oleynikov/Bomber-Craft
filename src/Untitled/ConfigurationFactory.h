@@ -26,7 +26,6 @@ class ConfigurationFactory : public AFactory<QString,AConfiguration*> , public A
             this->configuration = new AConfiguration();
 
             this->setFilePath(this->feedstock);
-            this->setNodeName("parameter");
 
             return true;
 

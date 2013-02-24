@@ -42,7 +42,7 @@ class MainWindow : public QMainWindow
             //  Configuring graphics view
             this->display.setParent(ui.centralWidget);
             this->display.setScene(&this->game->getScene());
-            this->display.setSceneRect(0,0,640,480);
+
             QObject::connect(&this->display,SIGNAL(keyPress(int)),this->game,SLOT(keyPress(int)));
 
             //  Starting the game
