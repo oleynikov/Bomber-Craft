@@ -33,7 +33,8 @@ HEADERS  += \
     Game.h \
     SpriteFactory.h \
     Map.h \
-    WindowError.h
+    WindowError.h \
+    MapLoader.h
 
 FORMS    += \
     WindowMain.ui \
